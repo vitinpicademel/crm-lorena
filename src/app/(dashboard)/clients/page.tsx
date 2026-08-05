@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Plus, Search, MessageCircle, MoreHorizontal } from "lucide-react"
 import Link from "next/link"
 import { createServerClient } from '@supabase/ssr'
@@ -84,9 +85,23 @@ export default async function ClientsPage() {
                       <Button variant="ghost" size="icon" className="text-green-600 hover:text-green-700 hover:bg-green-50 rounded-full h-8 w-8">
                         <MessageCircle className="h-4 w-4" />
                       </Button>
-                      <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground rounded-full h-8 w-8">
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground rounded-full h-8 w-8">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuLabel>Ações</DropdownMenuLabel>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem asChild className="cursor-pointer">
+                            <Link href={`/clients/${client.id}`}>Ver Detalhes</Link>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="cursor-pointer">Editar Cliente</DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem className="text-destructive cursor-pointer">Mover para Lixeira</DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </div>
                   </TableCell>
                 </TableRow>
