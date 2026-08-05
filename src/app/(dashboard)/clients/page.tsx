@@ -92,7 +92,7 @@ export default async function ClientsPage() {
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>Ações</DropdownMenuLabel>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem className="cursor-pointer" onClick={() => {}}>
+                          <DropdownMenuItem className="cursor-pointer">
                             <Link href={`/clients/${client.id}`} className="w-full h-full">Ver Detalhes</Link>
                           </DropdownMenuItem>
                           <DropdownMenuItem className="cursor-pointer">Editar Cliente</DropdownMenuItem>
