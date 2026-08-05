@@ -35,12 +35,12 @@ export default async function ClientsPage() {
           <h2 className="text-3xl font-bold tracking-tight text-foreground">Clientes</h2>
           <p className="text-muted-foreground mt-1">Gerencie sua base de clientes e leads de forma eficiente.</p>
         </div>
-        <Button asChild className="w-full md:w-auto gap-2 bg-primary hover:bg-primary/90 text-primary-foreground shadow-md transition-all">
-          <Link href="/clients/new">
+        <Link href="/clients/new">
+          <Button className="w-full md:w-auto gap-2 bg-primary hover:bg-primary/90 text-primary-foreground shadow-md transition-all">
             <Plus className="h-4 w-4" />
             Novo Cliente
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       </div>
 
       <div className="flex items-center space-x-2">
