@@ -66,7 +66,7 @@ export function ClientForm() {
         })
         router.push("/clients")
       }
-    } catch (_error) {
+    } catch {
       toast.add({
         type: "error",
         title: "Erro inesperado",

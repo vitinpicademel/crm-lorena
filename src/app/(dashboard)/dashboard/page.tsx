@@ -1,4 +1,4 @@
-import { Users, Home, TrendingUp, Calendar, AlertCircle } from "lucide-react"
+import { Users, TrendingUp, Calendar, AlertCircle } from "lucide-react"
 
 export default function DashboardPage() {
   return (
