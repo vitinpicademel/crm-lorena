@@ -86,16 +86,14 @@ export default async function ClientsPage() {
                         <MessageCircle className="h-4 w-4" />
                       </Button>
                       <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground rounded-full h-8 w-8">
-                            <MoreHorizontal className="h-4 w-4" />
-                          </Button>
+                        <DropdownMenuTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8 text-muted-foreground">
+                          <MoreHorizontal className="h-4 w-4" />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>Ações</DropdownMenuLabel>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem asChild className="cursor-pointer">
-                            <Link href={`/clients/${client.id}`}>Ver Detalhes</Link>
+                          <DropdownMenuItem className="cursor-pointer" onClick={() => {}}>
+                            <Link href={`/clients/${client.id}`} className="w-full h-full">Ver Detalhes</Link>
                           </DropdownMenuItem>
                           <DropdownMenuItem className="cursor-pointer">Editar Cliente</DropdownMenuItem>
                           <DropdownMenuSeparator />
