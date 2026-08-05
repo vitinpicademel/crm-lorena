@@ -13,7 +13,7 @@ export default async function ClientsPage() {
   const cookieStore = cookies()
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
     {
       cookies: {
         get(name: string) {
@@ -68,7 +68,7 @@ export default async function ClientsPage() {
                 <TableRow key={client.id} className="hover:bg-muted/20 transition-colors">
                   <TableCell className="font-medium py-4">
                     <Link href={`/clients/${client.id}`} className="hover:text-primary transition-colors block">
-                      {client.name}
+                      {client.full_name}
                     </Link>
                     <div className="text-[13px] text-muted-foreground mt-0.5">{client.phone}</div>
                   </TableCell>
@@ -78,7 +78,7 @@ export default async function ClientsPage() {
                     </span>
                   </TableCell>
                   <TableCell className="py-4 text-foreground/80">{client.priority}</TableCell>
-                  <TableCell className="py-4 text-foreground/80">{client.source || '-'}</TableCell>
+                  <TableCell className="py-4 text-foreground/80">{client.origin || '-'}</TableCell>
                   <TableCell className="text-right py-4 pr-4">
                     <div className="flex justify-end gap-1">
                       <Button variant="ghost" size="icon" className="text-green-600 hover:text-green-700 hover:bg-green-50 rounded-full h-8 w-8">
