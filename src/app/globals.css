@@ -1,0 +1,81 @@
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  .theme {
+    --font-heading: var(--font-sans);
+    --font-sans: var(--font-sans);
+  }
+  :root {
+    --background: 38 36% 96%; /* #FAF7F2 - off-white quente */
+    --foreground: 29 28% 11%; /* #1F1811 - marrom quase preto */
+    --card: 0 0% 100%; /* #FFFFFF */
+    --card-foreground: 29 28% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 29 28% 11%;
+    --primary: 36 34% 52%; /* #B08D57 - Dourado fosco/envelhecido */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 34 29% 89%; /* #EDE6DB */
+    --secondary-foreground: 29 28% 11%;
+    --muted: 34 29% 89%;
+    --muted-foreground: 27 15% 45%;
+    --accent: 34 29% 89%;
+    --accent-foreground: 29 28% 11%;
+    --destructive: 8 46% 45%; /* #A64B3D - Vermelho terroso */
+    --destructive-foreground: 0 0% 100%;
+    --border: 34 29% 89%; /* #EDE6DB - cinza-marrom claro */
+    --input: 34 29% 89%;
+    --ring: 36 34% 52%;
+    --radius: 0.75rem; /* 12px */
+  }
+
+  .dark {
+    /* Mantendo paleta genérica para dark mode, foco no luxo light */
+    --background: 20 15% 10%; 
+    --foreground: 38 36% 96%; 
+    --card: 20 15% 12%;
+    --card-foreground: 38 36% 96%;
+    --popover: 20 15% 12%;
+    --popover-foreground: 38 36% 96%;
+    --primary: 36 34% 52%; 
+    --primary-foreground: 20 15% 10%;
+    --secondary: 20 15% 16%;
+    --secondary-foreground: 38 36% 96%;
+    --muted: 20 15% 16%;
+    --muted-foreground: 25 10% 65%;
+    --accent: 36 34% 52%;
+    --accent-foreground: 20 15% 10%;
+    --destructive: 8 46% 45%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 20 15% 20%;
+    --input: 20 15% 20%;
+    --ring: 36 34% 52%;
+  }
+
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+  }
+
+
+  html {
+    @apply font-sans;
+  }
+}
