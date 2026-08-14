@@ -3,7 +3,6 @@
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useCallback, useTransition } from 'react'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -103,19 +102,16 @@ export function ClientsSearchFilter() {
 
       {/* Dropdown de filtros */}
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="outline"
-            className={`shadow-sm bg-white gap-2 ${hasActiveFilters ? 'border-primary text-primary' : ''}`}
-          >
-            <SlidersHorizontal className="h-4 w-4" />
-            Filtros
-            {hasActiveFilters && (
-              <span className="ml-1 inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-bold w-4 h-4">
-                {activeCount}
-              </span>
-            )}
-          </Button>
+        <DropdownMenuTrigger
+          className={`inline-flex items-center gap-2 rounded-md border bg-white px-3 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground ${hasActiveFilters ? 'border-primary text-primary' : 'border-input text-foreground'}`}
+        >
+          <SlidersHorizontal className="h-4 w-4" />
+          Filtros
+          {hasActiveFilters && (
+            <span className="ml-1 inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-bold w-4 h-4">
+              {activeCount}
+            </span>
+          )}
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end" className="w-52">
