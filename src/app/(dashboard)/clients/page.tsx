@@ -1,15 +1,27 @@
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Plus, Search, MessageCircle, MoreHorizontal } from "lucide-react"
+import { Plus, MessageCircle, MoreHorizontal } from "lucide-react"
 import Link from "next/link"
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
+import { Suspense } from 'react'
+import { ClientsSearchFilter } from '@/components/clients/clients-search-filter'
 
 // Opt out of static rendering so we always fetch fresh data
 export const dynamic = 'force-dynamic';
 
-export default async function ClientsPage() {
+interface SearchParams {
+  q?: string
+  status?: string
+  priority?: string
+  origin?: string
+}
+
+export default async function ClientsPage({
+  searchParams,
+}: {
+  searchParams: SearchParams
+}) {
   const cookieStore = cookies()
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -23,10 +35,38 @@ export default async function ClientsPage() {
     }
   )
 
-  const { data: clients } = await supabase
+  // Monta a query com filtros dinâmicos
+  let query = supabase
     .from('clients')
     .select('*')
     .order('created_at', { ascending: false })
+
+  // Filtro de busca textual (nome, email ou telefone)
+  if (searchParams.q && searchParams.q.trim() !== '') {
+    const term = `%${searchParams.q.trim()}%`
+    query = query.or(
+      `full_name.ilike.${term},email.ilike.${term},phone.ilike.${term}`
+    )
+  }
+
+  // Filtro de status (correspondência exata)
+  if (searchParams.status && searchParams.status.trim() !== '') {
+    query = query.ilike('status', searchParams.status.trim())
+  }
+
+  // Filtro de prioridade (correspondência exata)
+  if (searchParams.priority && searchParams.priority.trim() !== '') {
+    query = query.ilike('priority', searchParams.priority.trim())
+  }
+
+  // Filtro de origem (correspondência exata)
+  if (searchParams.origin && searchParams.origin.trim() !== '') {
+    query = query.ilike('origin', searchParams.origin.trim())
+  }
+
+  const { data: clients } = await query
+
+  const hasFilters = searchParams.q || searchParams.status || searchParams.priority || searchParams.origin
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
@@ -43,13 +83,19 @@ export default async function ClientsPage() {
         </Link>
       </div>
 
-      <div className="flex items-center space-x-2">
-        <div className="relative flex-1 max-w-md shadow-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input type="search" placeholder="Buscar por nome, email ou telefone..." className="pl-9 bg-white border-muted" />
-        </div>
-        <Button variant="outline" className="shadow-sm bg-white">Filtros</Button>
-      </div>
+      {/* Barra de busca e filtros — Client Component */}
+      <Suspense fallback={null}>
+        <ClientsSearchFilter />
+      </Suspense>
+
+      {/* Resumo dos resultados quando há filtro ativo */}
+      {hasFilters && (
+        <p className="text-sm text-muted-foreground -mt-4">
+          {clients && clients.length > 0
+            ? `${clients.length} cliente${clients.length !== 1 ? 's' : ''} encontrado${clients.length !== 1 ? 's' : ''}`
+            : 'Nenhum cliente encontrado com esses filtros'}
+        </p>
+      )}
 
       <div className="border border-border/60 rounded-xl bg-white shadow-[0_2px_10px_-3px_rgba(0,0,0,0.05)] overflow-hidden">
         <Table>
@@ -96,7 +142,9 @@ export default async function ClientsPage() {
             ) : (
               <TableRow>
                 <TableCell colSpan={5} className="text-center py-10 text-muted-foreground">
-                  Nenhum cliente cadastrado ainda. Clique em &quot;Novo Cliente&quot; para começar.
+                  {hasFilters
+                    ? 'Nenhum cliente encontrado. Tente outros filtros.'
+                    : 'Nenhum cliente cadastrado ainda. Clique em "Novo Cliente" para começar.'}
                 </TableCell>
               </TableRow>
             )}
